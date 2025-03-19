@@ -1,0 +1,170 @@
+body {
+  background: linear-gradient(180deg, #ffecd1 0%, #ffb6b9 50%, #ff8b94 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.grid {
+  height: 608px;
+  width: 608px;
+  border-radius: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 100px auto auto;
+}
+
+.grid div {
+  height: 70px;
+  width: 70px;
+  border-radius: 8%;
+  margin: 3px;
+
+  /* Dodanie cieni dla efektu 3D */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.151),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+    inset 0 3px 5px rgba(255, 255, 255, 0.2);
+
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Efekt wciśnięcia po kliknięciu */
+.grid div:active {
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9);
+}
+
+/* Klasa animacji impulsu */
+.pulse {
+  animation: pulse 0.3s ease-in-out;
+}
+.grid div.special {
+  /* background: linear-gradient(145deg, #f6d365, #fda085); */
+  background-color: black;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+    inset 0 3px 5px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.score-board {
+  margin-top: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.fall {
+  animation: fall 0.5s ease-in;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-80px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+/* Add to style.css */
+.exp-bar {
+  width: 200px;
+  height: 10px;
+  background: #eee;
+  border-radius: 5px;
+  margin: 10px auto;
+  overflow: hidden;
+}
+
+.exp-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #ffecb3, #ffd54f);
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.grid div.special {
+  animation: glow 1s infinite;
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+/* Pulsowanie dla kafelka GOLD */
+.pulse-gold {
+  animation: pulseGold 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseGold {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+  }
+}
+
+/* Pulsowanie dla kafelka EXP */
+.pulse-exp {
+  animation: pulseExp 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseExp {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(144, 238, 144, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(144, 238, 144, 1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(144, 238, 144, 0.7);
+  }
+}
+/* Animacja pulsowania dla wybranego kafelka */
+.selected {
+  animation: pulseSelected 1s infinite ease-in-out;
+}
+
+@keyframes pulseSelected {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(15, 10, 10, 0.3);
+  }
+  50% {
+    transform: scale(0.9);
+    box-shadow: 0 0 20px rgba(15, 10, 10, 0.7);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(15, 10, 10, 0.3);
+  }
+}
