@@ -49,14 +49,40 @@ html {
 }
 
 /* Wyniki i poziomy – zawsze nad planszą */
+/* Styl dla kontenera z wynikami */
 .score-board {
-  font-size: 24px;
-  color: #333;
-  text-align: center;
+  margin-top: 20px;
+  width: fit-content; /* Dopasowanie szerokości do zawartości */
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.2); /* Przezroczyste tło */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Lekki cień */
+  backdrop-filter: blur(8px); /* Efekt rozmycia tła */
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Styl dla pojedynczego wyniku (Points, Level, Coins) */
+.score-board div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Styl emoji – lekki cień dla podkreślenia */
+.score-board span {
+  font-weight: bold;
+  color: #222;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Odstęp od planszy */
+.grid {
+  margin-top: 10px;
 }
 
 /* Pasek EXP */
