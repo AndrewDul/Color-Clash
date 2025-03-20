@@ -1,3 +1,5 @@
+import { setupModals } from "./gameRulesModal.js";
+import { setupStoreModal } from "./storeModal.js";
 const grid = document.querySelector(".grid");
 const width = 8;
 const squares = [];
@@ -343,5 +345,61 @@ function startGame() {
     }
   }, 100);
 }
+function updateStats() {
+  document.getElementById("storePoints").textContent = score;
+  document.getElementById("storeCoins").textContent = coins;
+}
+// === MENU LOGIC ===
+document.addEventListener("DOMContentLoaded", () => {
+  setupModals();
+  setupStoreModal(
+    () => points, // Callback to get points
+    () => coins, // Callback to get coins
+    (newPoints) => {
+      points = newPoints;
+      updateStats();
+    }, // Callback to update points
+    (newCoins) => {
+      coins = newCoins;
+      updateStats();
+    } // Callback to update coins
+  ); // Store modal setup
+  const menu = document.getElementById("menu");
+  const startGameButton = document.getElementById("startGame");
+  const gameContainer = document.getElementById("gameContainer");
+  const menuButton = document.getElementById("menuButton");
+  const logoButton = document.getElementById("logo");
 
-document.addEventListener("DOMContentLoaded", startGame);
+  // Start game when "Play Now" is clicked
+  startGameButton.addEventListener("click", () => {
+    menu.style.opacity = "0"; // Fade out menu
+    menu.style.visibility = "hidden"; // Hide menu after fade-out
+    gameContainer.classList.add("visible"); // Show game container
+    menuButton.classList.remove("hidden"); // Show menu button
+  });
+  logoButton.addEventListener("click", () => {
+    menu.style.opacity = "0";
+    menu.style.visibility = "hidden";
+    gameContainer.classList.add("visible");
+    menuButton.classList.remove("hidden");
+    startGame(); // Call the existing game-start function
+  });
+
+  // Show menu when Menu button is clicked
+  menuButton.addEventListener("click", () => {
+    playClickSound(); // Optional sound
+    menu.style.opacity = "1"; // Fade in menu
+    menu.style.visibility = "visible"; // Show menu after fade-in
+    gameContainer.classList.remove("visible"); // Hide game container
+    menuButton.classList.add("hidden"); // Hide menu button
+  });
+
+  // Example function to play sound
+  function playClickSound() {
+    const audio = new Audio("1.wav");
+    audio.play();
+  }
+
+  startGame();
+});
+export { score, coins, updateStats };

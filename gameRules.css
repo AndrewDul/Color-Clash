@@ -1,0 +1,152 @@
+/* === MODAL WINDOW === */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%; /* Pełna szerokość */
+  height: 100%; /* Pełna wysokość */
+  background: rgba(0, 0, 0, 0.5); /* Przyciemnione tło za modalem */
+  backdrop-filter: blur(8px);
+}
+
+/* === MODAL CONTENT === */
+.modal-content {
+  background: linear-gradient(180deg, #ffecd1 0%, #ffb6b9 50%, #ff8b94 100%);
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%; /* Użyj 90% szerokości ekranu */
+  max-width: 500px; /* Maksymalna szerokość */
+  margin: 10vh auto; /* Wyśrodkowanie na ekranie */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  color: #222;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  text-align: left;
+  max-height: 70vh; /* Maksymalna wysokość */
+  scrollbar-width: none; /* Ukrycie suwaka */
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* === MODAL TITLE === */
+.modal-content h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff4553;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* === MODAL SUBTITLES === */
+.modal-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff4553;
+  margin-top: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === MODAL LISTS === */
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-content li {
+  margin-bottom: 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.modal-content li::before {
+  content: "•";
+  color: #ff4553;
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+/* === MODAL TEXT === */
+.modal-content p {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+/* === CLOSE BUTTON === */
+.close {
+  color: #444;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close:hover {
+  color: #ff4553;
+}
+
+/* === RESPONSYWNOŚĆ === */
+
+/* 🔹 Telefony – układ pionowy (390x840) */
+@media (max-width: 420px) {
+  .modal-content {
+    width: 77%; /* Dopasowanie do wąskich ekranów */
+
+    padding: 16px;
+    max-height: 80vh; /* Większa wysokość na wąskich ekranach */
+  }
+
+  .modal-content h2 {
+    font-size: 20px;
+  }
+
+  .modal-content h3 {
+    font-size: 16px;
+  }
+
+  .modal-content li {
+    font-size: 14px;
+  }
+
+  .modal-content p {
+    font-size: 14px;
+  }
+
+  .close {
+    font-size: 24px;
+  }
+}
+
+/* 🔹 Tablety w układzie pionowym (480px - 768px) */
+@media (min-width: 480px) and (max-width: 768px) {
+  .modal-content {
+    width: 85%; /* Szerszy modal na tabletach */
+    padding: 20px;
+  }
+}
+
+/* 🔹 Małe laptopy (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .modal-content {
+    width: 75%;
+    padding: 24px;
+  }
+}
+
+/* 🔹 Duże ekrany (ponad 1200px) */
+@media (min-width: 1200px) {
+  .modal-content {
+    width: 500px; /* Stała szerokość na dużych ekranach */
+    padding: 24px;
+  }
+}

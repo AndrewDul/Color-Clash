@@ -1,0 +1,300 @@
+/* === GLOBAL STYLES === */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #ffecd1 0%, #ffb6b9 50%, #ff8b94 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* === MENU STYLES === */
+.menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 30px;
+  border-radius: 12px;
+
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.menu-logo {
+  width: 70%;
+  margin-bottom: 20px;
+}
+
+.menu-btn,
+.menu-btn-secondary {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.menu-btn {
+  background-color: #ff8b94;
+  color: white;
+}
+
+.menu-btn:hover {
+  background-color: #ff6473;
+}
+
+.menu-btn-secondary {
+  background-color: #eee;
+  color: #555;
+}
+
+.menu-btn-secondary:hover {
+  background-color: #ddd;
+}
+
+/* === HIDDEN CLASS === */
+.hidden {
+  display: none;
+}
+
+/* === GAME CONTAINER === */
+.game-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === RESPONSIVE LAYOUT === */
+@media (max-width: 480px) {
+  .menu {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .menu-logo {
+    width: 80%;
+  }
+
+  .menu-btn,
+  .menu-btn-secondary {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .menu {
+    width: 98%;
+    padding: 15px;
+  }
+
+  .menu-logo {
+    width: 70%;
+  }
+
+  .menu-btn,
+  .menu-btn-secondary {
+    font-size: 14px;
+  }
+}
+/* === MENU BUTTON === */
+.menu-btn-transparent {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.2); /* Transparent background */
+  color: #444;
+  font-size: 18px;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(8px); /* Frosted glass effect */
+}
+
+/* Hover Effect */
+.menu-btn-transparent:hover {
+  box-shadow: 0 0 20px rgba(255, 105, 135, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.5);
+  transform: translateX(-50%) scale(1.05);
+  animation: pulse 1s infinite ease-in-out;
+}
+
+/* Click Animation */
+.menu-btn-transparent:active {
+  transform: translateX(-50%) scale(0.95);
+  box-shadow: 0 0 16px rgba(255, 105, 135, 0.7);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 105, 135, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 105, 135, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 105, 135, 0.3);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .menu-btn-transparent {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .menu-btn-transparent {
+    font-size: 14px;
+    margin-top: 120px;
+    padding: 8px 16px;
+  }
+}
+/* ////////////////////////////////////////////////////// */
+
+/* === GAME CONTAINER (Hidden by Default) === */
+.game-container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.game-container.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* === MENU BUTTON === */
+.menu-btn-transparent {
+  position: absolute;
+  top: calc(50% - 300px - 120px); /* 20px above board */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+
+  color: #444;
+  font-size: 18px;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+/* Hover Effect */
+.menu-btn-transparent:hover {
+  box-shadow: 0 0 20px rgba(255, 105, 135, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.5);
+  transform: translateX(-50%) scale(1.05);
+  animation: pulse 1s infinite ease-in-out;
+}
+
+/* Click Animation */
+.menu-btn-transparent:active {
+  transform: translateX(-50%) scale(0.95);
+  box-shadow: 0 0 16px rgba(255, 105, 135, 0.7);
+}
+.menu-btn-transparent.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 105, 135, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 105, 135, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 105, 135, 0.3);
+  }
+}
+/* === LOGO STYLING === */
+.menu-logo {
+  width: 70%;
+  margin-bottom: 20px;
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Blur effect around edges */
+  filter: drop-shadow(0 0 15px rgba(255, 105, 135, 0.5)); /* Extra soft glow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Optional hover effect for better interaction */
+.menu-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 105, 135, 0.5);
+}
+/* ===== Logo - podskakiwanie i kliknięcie ===== */
+.logo {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: translateY(-5px); /* Podskok na hover */
+}
+
+.logo:active {
+  animation: bounce 0.4s ease; /* Podskok po kliknięciu */
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* ===== Przycisk - podskok na hover ===== */
+.button {
+  background-color: #ffb6b9;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.button:active {
+  animation: bounce 0.3s ease;
+}

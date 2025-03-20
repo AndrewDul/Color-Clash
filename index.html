@@ -6,20 +6,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Color Clash</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="logic.js" defer></script>
+    <link rel="stylesheet" href="menu_style.css" />
+    <link rel="stylesheet" href="gameRules.css" />
+    <link rel="stylesheet" href="storeStyle.css" />
+    <script type="module" src="logic.js" defer></script>
   </head>
   <body>
-    <body>
-      <div class="grid"></div>
-      <div class="score-board">
-        <!-- Add to index.html -->
-        <div>Points 🎖️: <span id="score">0</span></div>
-        <div>level ✨: <span id="level">1</span></div>
-        <div>coins 🪙: <span id="coins">0</span></div>
+    <!-- Game Start Menu -->
+    <div id="menu" class="menu">
+      <img src="logo.png" alt="Color Clash Logo" class="menu-logo" id="logo" />
+      <button id="startGame" class="menu-btn">Play Now</button>
+      <button id="missions" class="menu-btn-secondary">Missions</button>
+      <button id="achievements" class="menu-btn-secondary">Achievements</button>
+      <button id="store" class="menu-btn-secondary">Store</button>
+      <button id="gameRules" class="menu-btn-secondary">Game Rules</button>
+    </div>
+    <button id="menuButton" class="menu-btn-transparent visible hidden">
+      Menu
+    </button>
+    <!-- Game Rules Modal -->
+    <div id="gameRulesModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Game Rules</h2>
+        <p>
+          Welcome to **Color Clash**! Your goal is to match at least 3 tiles of
+          the same color vertically or horizontally to score points and earn
+          coins. Here’s how you play:
+        </p>
+
+        <h3>🎮 How to Play:</h3>
+        <ul>
+          <li>Click or tap on a tile to select it.</li>
+          <li>
+            Swap two adjacent tiles to create a match of three or more tiles.
+          </li>
+          <li>Special tiles (gold or green) give bonus points and effects!</li>
+        </ul>
+
+        <h3>💡 Special Tiles:</h3>
+        <ul>
+          <li>💛 Gold Tile: Awards extra **50 points** and **1 coin**.</li>
+          <li>💚 Green Tile: Grants **EXP** – earn enough to level up!</li>
+        </ul>
+
+        <h3>🛒 Store:</h3>
+        <p>
+          Use your coins and points to purchase upgrades in the store. Upgrades
+          include:
+        </p>
+        <ul>
+          <li>🔹 Power-Ups – Destroy nearby tiles!</li>
+          <li>🔹 Extra Moves – Gain additional turns!</li>
+          <li>🔹 Bonus Multipliers – Increase points gained!</li>
+        </ul>
+
+        <h3>🏆 Achievements:</h3>
+        <p>
+          Complete in-game missions to unlock achievements and bonus rewards!
+        </p>
       </div>
+    </div>
+
+    <!-- Store Modal -->
+    <div id="storeModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeStoreModal">&times;</span>
+        <h2>Store</h2>
+
+        <!-- Store image -->
+        <div class="store-image">
+          <img src="logo.png" alt="Store" />
+        </div>
+
+        <!-- Points and Coins Info -->
+        <div class="store-info">
+          <p>Points: <span id="storePoints">0</span></p>
+          <p>Coins: <span id="storeCoins">0</span></p>
+        </div>
+
+        <!-- Store Items -->
+        <div class="store-items">
+          <!-- Item 1: Bomb -->
+          <div class="store-item">
+            <img src="logo.png" alt="Bomb" />
+            <h3>💣 Bomb</h3>
+            <p>Destroy surrounding tiles instantly!</p>
+            <p class="price">Price: 30 coins</p>
+            <button class="buy-button" data-item="bomb">Buy</button>
+          </div>
+
+          <!-- Item 2: Release -->
+          <div class="store-item">
+            <img src="logo.png" alt="Release" />
+            <h3>🪄 Release</h3>
+            <p>Clear all tiles of one color!</p>
+            <p class="price">Price: 40 coins</p>
+            <button class="buy-button" data-item="release">Buy</button>
+          </div>
+
+          <!-- Item 3: Exchange Points for Coins -->
+          <div class="store-item">
+            <img src="logo.png" alt="Exchange" />
+            <h3>🔄 Exchange</h3>
+            <p>Convert 1000 points to 5 coins.</p>
+            <p class="price">Requires: 1000 points</p>
+            <button class="buy-button" data-item="exchange">Exchange</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Grid (Initially Hidden) -->
+    <div id="gameContainer" class="game-container hidden">
+      <div class="grid"></div>
+
+      <!-- Score Board -->
+      <div class="score-board">
+        <div>Points 🎖️: <span id="score">0</span></div>
+        <div>Level ✨: <span id="level">1</span></div>
+        <div>Coins 🪙: <span id="coins">0</span></div>
+      </div>
+
+      <!-- EXP Bar -->
       <div class="exp-bar">
         <div class="exp-progress"></div>
       </div>
-    </body>
+    </div>
   </body>
 </html>
