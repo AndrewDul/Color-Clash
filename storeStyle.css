@@ -111,9 +111,11 @@
 }
 
 /* === RESPONSIVENESS === */
-@media (max-width: 480px) {
+@media (max-width: 400px) {
   #storeModal .modal-content {
     padding: 16px;
+    width: 80%;
+    max-height: 80vh;
   }
 
   .store-item {
