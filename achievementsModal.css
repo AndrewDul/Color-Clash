@@ -1,0 +1,145 @@
+/* Achievements Modal */
+#achievementsModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%; /* 👈 Dopasowuje szerokość do ekranu */
+  max-width: 30%; /* 👈 Zmniejsza szerokość na dużych ekranach */
+  transform: translate(-50%, -50%);
+  background: linear-gradient(180deg, #ffecd1 0%, #ffb6b9 50%, #ff8b94 100%);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* 👈 Bardziej subtelny cień */
+  z-index: 999;
+  overflow-y: auto; /* 👈 Pozwoli na przewijanie, jeśli treść będzie zbyt długa */
+  max-height: 80vh;
+}
+
+#achievementsModal h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+/* Achievement Container */
+.achievement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Achievement Style */
+.achievement {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.7); /* 👈 Lekko przezroczyste tło */
+  border-radius: 12px;
+  gap: 12px;
+  transition: 0.3s ease;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  border: 2px solid #ddd; /* 👈 Subtelna ramka */
+  cursor: not-allowed;
+}
+
+.achievement img {
+  width: 50px; /* 👈 Zwiększony rozmiar dla lepszej widoczności */
+  height: 50px;
+  border-radius: 8px;
+}
+
+/* Achievement Unlocked */
+.achievement.unlocked {
+  background: #ffb6b9;
+  opacity: 1;
+  filter: none;
+  border: 2px solid #ff8b94;
+  cursor: pointer;
+}
+
+/* Tekst osiągnięcia */
+.achievement h3 {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.achievement p {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+/* Close Button */
+#closeAchievementsModal {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  #achievementsModal {
+    width: 95%; /* 👈 Dopasowanie do małych ekranów */
+    padding: 16px;
+  }
+
+  .achievement img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .achievement h3 {
+    font-size: 14px;
+  }
+
+  .achievement p {
+    font-size: 12px;
+  }
+}
+/* Modal Logo Style */
+.achievement-logo {
+  width: 80%; /* Ustalamy domyślny rozmiar */
+  height: 90%;
+  border-radius: 12px; /* Zaokrąglone rogi */
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Delikatny cień */
+
+  transition: all 0.3s ease;
+}
+
+/* Efekt po najechaniu – lekki "glow" */
+.achievement-logo:hover {
+  box-shadow: 0 6px 14px rgba(255, 182, 185, 0.6);
+  transform: scale(0.99);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .achievement-logo {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .achievement-logo {
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+.achievement-logo-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-bottom: 20px; /* Odstęp od reszty treści */
+}

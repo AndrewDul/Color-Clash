@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="menu_style.css" />
     <link rel="stylesheet" href="gameRules.css" />
     <link rel="stylesheet" href="storeStyle.css" />
+    <link rel="stylesheet" href="achievementsModal.css" />
+    <link rel="stylesheet" href="missionsModal.css" />
     <script type="module" src="logic.js" defer></script>
+    <script type="module" src="missionsModal.js" defer></script>
   </head>
   <body>
     <!-- Game Start Menu -->
@@ -26,12 +29,18 @@
     </button>
     <!-- Game Rules Modal -->
     <div id="gameRulesModal" class="modal">
-      <div class="modal-content">
+      <div class="modal-content1">
         <span class="close" id="closeModal">&times;</span>
         <h2>Game Rules</h2>
+
+        <!-- === IMAGE (NEW) === -->
+        <div class="modal-image-container">
+          <img src="rules.png" alt="Game Rules" class="modal-image" />
+        </div>
+
         <p>
-          Welcome to **Color Clash**! Your goal is to match at least 3 tiles of
-          the same color vertically or horizontally to score points and earn
+          Welcome to <b>Color Clash</b>! Your goal is to match at least 3 tiles
+          of the same color vertically or horizontally to score points and earn
           coins. Here’s how you play:
         </p>
 
@@ -46,8 +55,10 @@
 
         <h3>💡 Special Tiles:</h3>
         <ul>
-          <li>💛 Gold Tile: Awards extra **50 points** and **1 coin**.</li>
-          <li>💚 Green Tile: Grants **EXP** – earn enough to level up!</li>
+          <li>
+            💛 Gold Tile: Awards extra <b>50 points</b> and <b>1 coin</b>.
+          </li>
+          <li>💚 Green Tile: Grants <b>EXP</b> – earn enough to level up!</li>
         </ul>
 
         <h3>🛒 Store:</h3>
@@ -76,7 +87,7 @@
 
         <!-- Store image -->
         <div class="store-image">
-          <img src="logo.png" alt="Store" />
+          <img src="store.png" alt="Store" />
         </div>
 
         <!-- Points and Coins Info -->
@@ -114,6 +125,83 @@
             <button class="buy-button" data-item="exchange">Exchange</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Achievements Modal -->
+    <div id="achievementsModal" class="modal">
+      <div class="modal-contentacxh">
+        <span class="close" id="closeAchievementsModal">&times;</span>
+        <h2>Achievements</h2>
+        <div class="achievement-logo-container">
+          <img src="ach.png" alt="Achievement Logo" class="achievement-logo" />
+        </div>
+
+        <div class="achievement-list">
+          <!-- Achievement 1 -->
+          <div id="achievement-level-5" class="achievement locked">
+            <img src="logo.png" alt="Level 5 Achievement" />
+            <div>
+              <h3>Reach Level 5</h3>
+              <p>Reach level 5 to unlock this achievement.</p>
+            </div>
+          </div>
+
+          <!-- Achievement 2 -->
+          <div id="achievement-coins-10" class="achievement locked">
+            <img src="logo.png" alt="10 Coins Achievement" />
+            <div>
+              <h3>Collect 10 Coins</h3>
+              <p>Earn 10 coins to unlock this achievement.</p>
+            </div>
+          </div>
+
+          <!-- Achievement 3 -->
+          <div id="achievement-level-10" class="achievement locked">
+            <img src="logo.png" alt="Level 10 Achievement" />
+            <div>
+              <h3>Reach Level 10</h3>
+              <p>Reach level 10 to unlock this achievement.</p>
+            </div>
+          </div>
+
+          <!-- Achievement 4 -->
+          <div id="achievement-coins-50" class="achievement locked">
+            <img src="logo.png" alt="50 Coins Achievement" />
+            <div>
+              <h3>Collect 50 Coins</h3>
+              <p>Earn 50 coins to unlock this achievement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Missions Modal -->
+    <div id="missionsModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeMissionsModal">&times;</span>
+        <h2>Missions</h2>
+
+        <!-- ✅ Logo pod nazwą modala -->
+        <div class="modal-image-container">
+          <img src="mission.png" alt="Missions Logo" class="modal-image" />
+        </div>
+
+        <ul class="missions-list">
+          <li id="mission-level-3" class="mission">
+            <span class="mission-text">Reach Level 3</span>
+            <span class="mission-reward">Reward: 🪙 10 Coins</span>
+          </li>
+          <li id="mission-level-5" class="mission">
+            <span class="mission-text">Reach Level 5</span>
+            <span class="mission-reward">Reward: 🪙 10 Coins</span>
+          </li>
+          <li id="mission-play-1min" class="mission">
+            <span class="mission-text">Play for 1 Minute</span>
+            <span class="mission-reward">Reward: 🪙 50 Coins</span>
+          </li>
+        </ul>
       </div>
     </div>
 

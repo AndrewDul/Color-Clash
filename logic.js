@@ -1,5 +1,11 @@
 import { setupModals } from "./gameRulesModal.js";
 import { setupStoreModal } from "./storeModal.js";
+import { setupAchievementsModal } from "./achievementsModal.js";
+import { setupMissionsModal } from "./missionsModal.js";
+document.addEventListener("DOMContentLoaded", () => {
+  setupMissionsModal();
+});
+// === GAME LOGIC ===
 const grid = document.querySelector(".grid");
 const width = 8;
 const squares = [];
@@ -264,12 +270,14 @@ function updateScore(points) {
   score += points;
   console.log("Nowy wynik:", score);
   document.getElementById("score").textContent = score;
+  checkAchievements();
 }
 
 // Update coins
 function updateCoins() {
   // Usunięto inkrementację coins tutaj, bo jest już w removeMatches
   document.getElementById("coins").textContent = coins;
+  checkAchievements();
 }
 
 // Check for matches
@@ -345,9 +353,10 @@ function startGame() {
     }
   }, 100);
 }
-function updateStats() {
-  document.getElementById("storePoints").textContent = score;
-  document.getElementById("storeCoins").textContent = coins;
+export function updateStats() {
+  document.getElementById("score").textContent = score;
+  document.getElementById("coins").textContent = coins;
+  document.getElementById("level").textContent = level;
 }
 // === MENU LOGIC ===
 document.addEventListener("DOMContentLoaded", () => {
@@ -364,6 +373,8 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStats();
     } // Callback to update coins
   ); // Store modal setup
+  setupAchievementsModal(); // Achievements modal setup
+
   const menu = document.getElementById("menu");
   const startGameButton = document.getElementById("startGame");
   const gameContainer = document.getElementById("gameContainer");
@@ -402,4 +413,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
   startGame();
 });
-export { score, coins, updateStats };
+
+// === CHECK ACHIEVEMENTS FUNCTION ===
+export function checkAchievements() {
+  const achievements = [
+    { id: "achievement-level-5", condition: level >= 5 },
+    { id: "achievement-coins-10", condition: coins >= 10 },
+    { id: "achievement-level-10", condition: level >= 10 },
+    { id: "achievement-coins-50", condition: coins >= 50 },
+  ];
+
+  achievements.forEach((ach) => {
+    const element = document.getElementById(ach.id);
+    if (element) {
+      if (ach.condition) {
+        element.classList.add("unlocked");
+        element.classList.remove("locked");
+      } else {
+        element.classList.add("locked");
+        element.classList.remove("unlocked");
+      }
+    }
+  });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  checkAchievements(); // Sprawdź osiągnięcia na starcie
+});
+
+export function getScore() {
+  return score;
+}
+
+export function getCoins() {
+  return coins;
+}
+
+export function getLevel() {
+  return level;
+}
+export function addCoins(amount) {
+  coins += amount; // Zwiększenie ilości monet
+  updateStats(); // Aktualizacja UI
+}

@@ -1,0 +1,183 @@
+/* === MISSIONS MODAL === */
+#missionsModal {
+  display: none;
+  position: fixed;
+  top: 50%; /* ✅ Wycentrowanie w pionie */
+  left: 50%; /* ✅ Wycentrowanie w poziomie */
+  transform: translate(-50%, -50%);
+  width: 90%; /* ✅ Użycie 90% szerokości ekranu */
+  max-width: 500px;
+  background: linear-gradient(180deg, #ffecd1 0%, #ffb6b9 50%, #ff8b94 100%);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  color: #222;
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  text-align: center;
+  z-index: 999;
+  overflow-y: auto;
+  max-height: 80vh;
+  scrollbar-width: none;
+}
+
+#missionsModal::-webkit-scrollbar {
+  display: none; /* ✅ Ukrycie suwaka */
+}
+
+/* === MODAL TITLE === */
+#missionsModal h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff4553;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* === MODAL IMAGE CONTAINER === */
+.modal-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* ✅ Wycentrowanie w pionie */
+  margin-bottom: 20px; /* ✅ Większy odstęp od listy */
+}
+
+/* === MODAL IMAGE === */
+.modal-image {
+  width: 90%; /* ✅ Ustaw szerokość na 80% */
+  max-width: 400px; /* ✅ Maksymalna szerokość */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.modal-image:hover {
+  transform: scale(1.05);
+}
+
+/* === MISSIONS LIST === */
+.missions-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ✅ Wycentrowanie listy w poziomie */
+  gap: 14px; /* ✅ Odstępy między elementami */
+  padding: 0;
+  margin: 0;
+  width: 90%; /* ✅ Dopasowanie do szerokości modala */
+}
+
+/* === INDIVIDUAL MISSION === */
+.mission {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 14px;
+  border-radius: 12px;
+  width: 100%; /* ✅ Użycie pełnej szerokości */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+/* === MISSION TEXT === */
+.mission-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+}
+
+.mission-reward {
+  font-size: 14px;
+  color: #ff4553;
+  font-weight: 600;
+}
+
+/* === HOVER EFFECT === */
+.mission:hover {
+  background: #ffb6b9;
+  transform: scale(1.02);
+}
+
+/* === COMPLETED MISSION === */
+.mission.completed {
+  background: #99e5b5;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mission.completed .mission-text,
+.mission.completed .mission-reward {
+  color: #fff;
+}
+
+/* === MODAL CLOSE BUTTON === */
+#closeMissionsModal {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+#closeMissionsModal:hover {
+  color: #ff4553;
+}
+
+/* === RESPONSYWNOŚĆ === */
+
+/* 🔹 Telefony (max 480px) */
+@media (max-width: 480px) {
+  #missionsModal {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .missions-list {
+    gap: 12px;
+  }
+
+  .mission-text {
+    font-size: 14px;
+  }
+
+  .mission-reward {
+    font-size: 12px;
+  }
+
+  .modal-image {
+    width: 90%;
+    max-width: 120px;
+  }
+}
+
+/* 🔹 Tablety (480px - 768px) */
+@media (min-width: 480px) and (max-width: 768px) {
+  #missionsModal {
+    width: 85%;
+  }
+
+  .missions-list {
+    gap: 14px;
+  }
+}
+
+/* 🔹 Małe laptopy (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  #missionsModal {
+    width: 70%;
+  }
+
+  .missions-list {
+    gap: 16px;
+  }
+}
+
+/* 🔹 Duże ekrany (ponad 1200px) */
+@media (min-width: 1200px) {
+  #missionsModal {
+    width: 500px;
+  }
+}

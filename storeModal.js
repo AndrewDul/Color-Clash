@@ -1,4 +1,4 @@
-import { score, coins, updateStats } from "./logic.js";
+import { getScore, getCoins, updateStats } from "./logic.js";
 
 export function setupStoreModal(getPoints, getCoins, updateStats) {
   const storeModal = document.getElementById("storeModal");
@@ -16,7 +16,7 @@ export function setupStoreModal(getPoints, getCoins, updateStats) {
 
   // Open store modal
   openStoreButton.addEventListener("click", () => {
-    document.getElementById("storePoints").textContent = getPoints();
+    document.getElementById("storePoints").textContent = getScore();
     document.getElementById("storeCoins").textContent = getCoins();
     storeModal.style.display = "block";
   });
@@ -32,18 +32,28 @@ export function setupStoreModal(getPoints, getCoins, updateStats) {
     button.addEventListener("click", () => {
       const item = button.getAttribute("data-item");
 
-      if (item === "bomb" && getCoins() >= 30) {
-        updateCoins(getCoins() - 30);
-        alert("Bomb purchased!");
-      } else if (item === "release" && getCoins() >= 40) {
-        updateCoins(getCoins() - 40);
-        alert("Release purchased!");
-      } else if (item === "exchange" && getPoints() >= 1000) {
-        updatePoints(getPoints() - 1000);
-        updateCoins(getCoins() + 5);
-        alert("Points exchanged for 5 coins!");
-      } else {
-        alert("Not enough points or coins!");
+      if (item === "bomb") {
+        if (getCoins() >= 30) {
+          coins -= 30; // Update coins
+          alert("Bomb purchased!");
+        } else {
+          alert("Not enough coins!");
+        }
+      } else if (item === "release") {
+        if (getCoins() >= 40) {
+          coins -= 40;
+          alert("Release purchased!");
+        } else {
+          alert("Not enough coins!");
+        }
+      } else if (item === "exchange") {
+        if (getScore() >= 1000) {
+          score -= 1000;
+          coins += 5;
+          alert("Points exchanged for 5 coins!");
+        } else {
+          alert("Not enough points!");
+        }
       }
 
       // Update points and coins in UI

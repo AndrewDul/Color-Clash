@@ -7,12 +7,12 @@
   top: 0;
   width: 100%; /* Pełna szerokość */
   height: 100%; /* Pełna wysokość */
-  background: rgba(0, 0, 0, 0.5); /* Przyciemnione tło za modalem */
+
   backdrop-filter: blur(8px);
 }
 
 /* === MODAL CONTENT === */
-.modal-content {
+.modal-content1 {
   background: linear-gradient(180deg, #ffecd1 0%, #ffb6b9 50%, #ff8b94 100%);
   padding: 24px;
   border-radius: 16px;
@@ -149,4 +149,90 @@
     width: 500px; /* Stała szerokość na dużych ekranach */
     padding: 24px;
   }
+}
+/* === MODAL CONTAINER === */
+#gameRulesModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 500px;
+  transform: translate(-50%, -50%);
+
+  padding: 24px;
+  border-radius: 16px;
+
+  color: #222;
+  overflow-y: auto;
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  text-align: center;
+  max-height: 80vh;
+  z-index: 999;
+}
+
+/* === MODAL IMAGE CONTAINER === */
+.modal-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+/* === MODAL IMAGE STYLE === */
+.modal-image {
+  width: 80%; /* Ustaw szerokość na 80% */
+  max-width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+/* Efekt powiększenia po najechaniu */
+.modal-image:hover {
+  transform: scale(1.05);
+}
+
+/* === RESPONSYWNOŚĆ === */
+
+/* 🔹 Telefony (max 480px) */
+@media (max-width: 480px) {
+  #gameRulesModal {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .modal-image {
+    width: 90%;
+    max-width: 250px;
+  }
+}
+
+/* 🔹 Tablety (480px - 768px) */
+@media (min-width: 480px) and (max-width: 768px) {
+  #gameRulesModal {
+    width: 85%;
+  }
+}
+
+/* 🔹 Małe laptopy (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  #gameRulesModal {
+    width: 70%;
+  }
+}
+
+/* 🔹 Duże ekrany (ponad 1200px) */
+@media (min-width: 1200px) {
+  #gameRulesModal {
+    width: 500px;
+  }
+}
+#gameRulesModal {
+  overflow-y: scroll; /* Umożliwia przewijanie */
+  scrollbar-width: none; /* Ukrywa suwak w przeglądarkach Firefox */
+}
+
+#gameRulesModal::-webkit-scrollbar {
+  display: none; /* Ukrywa suwak w przeglądarkach opartych na WebKit (Chrome, Edge, Safari) */
 }
