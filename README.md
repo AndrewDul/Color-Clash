@@ -1,73 +1,45 @@
-# 🎮 Color Clash
+# Color Clash 🌈
 
-**Color Clash** is a fast-paced and addictive tile-matching game where you combine colorful tiles to score points, earn coins, and level up. Unlock powerful power-ups, complete achievements, and aim for the highest score!
+Color Clash is a responsive match-3 adventure built with HTML, CSS and JavaScript. It works directly in the browser on desktop and mobile — no installation or build step required.
 
----
+## Play
 
-## 🌐 **Live Demo**
+**Live game:** [andrewdul.github.io/Color-Clash](https://andrewdul.github.io/Color-Clash/)
 
-👉 **[Play Color Clash](https://andrewdul.github.io/Color-Clash/)**
+## Features
 
----
+- 15 campaign levels across 3 animated worlds
+- varied objectives: score, colors, coins, ice, special gems and artifact shards
+- rockets from a match of 4, rainbow gems from a match of 5, and bombs from T/L shapes
+- chain reactions, special-gem combinations and automatic board reshuffling
+- artifact collection and world progression
+- persistent coins, XP, stars, boosters and settings
+- power shop with a hammer, 5×5 bomb, rainbow wipe and shuffle
+- daily missions, daily gift and 12 permanent achievements
+- Polish and English language switch
+- independent music, sound-effect and reduced-animation settings
+- click, tap and swipe controls
+- responsive layouts designed for desktop and phone screens
 
-## 🚀 **Gameplay**
+## How to play
 
-🟢 Match tiles of the same color to score points and earn coins.  
-🟠 Unlock power-ups like bombs and color wipes to create massive chain reactions.  
-🔵 Gain experience (EXP) to level up and unlock new abilities.  
-💥 Achieve combo streaks to multiply your score and climb the leaderboard!
+Swap two adjacent gems to create a horizontal or vertical line of at least three. Only a successful swap uses a move. Complete every objective before the move counter reaches zero.
 
----
+- **4 gems:** creates a row or column rocket
+- **5 gems:** creates a rainbow gem and awards an artifact shard on artifact levels
+- **T or L shape:** creates an area bomb
+- **two powers:** swap them together for a larger combined effect
 
-## 🏆 **Features**
+Progress is stored locally in the browser with `localStorage`.
 
-✅ Fast-paced tile-matching action  
-✅ Power-ups like bombs, color wipes, and combo boosters  
-✅ Dynamic experience bar and leveling system  
-✅ Achievement-based rewards and bonuses  
-✅ High score tracking and competitive leaderboard
+## Run locally
 
----
+Serve this folder with any static HTTP server, then open `index.html`. For example:
 
-## 🖥️ **Technologies Used**
+```bash
+python -m http.server 4173
+```
 
-- **HTML** – Game structure and layout
-- **CSS** – Styling and animations
-- **JavaScript** – Game logic and mechanics
+## Author
 
----
-
-## 🌈 **Solutions and Mechanics**
-
-- 🔥 **Dynamic tile generation** – Tiles are randomly generated at the start and after each match.
-- 💡 **Controlled scoring** – Points and EXP are only counted after the first player action (avoiding unwanted points at the start).
-- 🚀 **Combo system** – Consecutive matches increase the score multiplier.
-- 🏆 **Achievements** – Completing goals unlocks special rewards.
-- 🎯 **Power-ups** – Bombs, color wipes, and combo streaks add strategic depth.
-
----
-
-## 🎯 **How to Play**
-
-1. Match tiles by swapping them horizontally or vertically.
-2. Earn points and coins for each match.
-3. Use power-ups to clear tiles and create combos.
-4. Gain EXP to level up and unlock new features.
-5. Try to reach the highest score and unlock all achievements!
-
----
-
-## 📸 **Screenshots**
-
-_Coming soon!_
-
----
-
-## 💪 **Author**
-
-👨‍💻 Created by **Andrew Dul**  
-📧 Contact: [GitHub Profile](https://github.com/AndrewDul)
-
----
-
-🔥 **Can you master the clash of colors?** 🎮🌈
+Created by [Andrew Dul](https://github.com/AndrewDul).

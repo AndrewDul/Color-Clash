@@ -2,224 +2,104 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#21183f" />
+    <meta name="description" content="Color Clash — a colorful match-3 adventure with levels, artifacts and powerful boosters." />
     <title>Color Clash</title>
+    <link rel="icon" href="logo.png" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="menu_style.css" />
-    <link rel="stylesheet" href="gameRules.css" />
-    <link rel="stylesheet" href="storeStyle.css" />
-    <link rel="stylesheet" href="achievementsModal.css" />
-    <link rel="stylesheet" href="missionsModal.css" />
     <script type="module" src="logic.js" defer></script>
-    <script type="module" src="missionsModal.js" defer></script>
   </head>
   <body>
-    <!-- Game Start Menu -->
-    <div id="menu" class="menu">
-      <img src="logo.png" alt="Color Clash Logo" class="menu-logo" id="logo" />
-      <button id="startGame" class="menu-btn">Play Now</button>
-      <button id="missions" class="menu-btn-secondary">Missions</button>
-      <button id="achievements" class="menu-btn-secondary">Achievements</button>
-      <button id="store" class="menu-btn-secondary">Store</button>
-      <button id="gameRules" class="menu-btn-secondary">Game Rules</button>
-    </div>
-    <button id="menuButton" class="menu-btn-transparent visible hidden">
-      Menu
-    </button>
-    <!-- Game Rules Modal -->
-    <div id="gameRulesModal" class="modal">
-      <div class="modal-content1">
-        <span class="close" id="closeModal">&times;</span>
-        <h2>Game Rules</h2>
-
-        <!-- === IMAGE (NEW) === -->
-        <div class="modal-image-container">
-          <img src="rules.png" alt="Game Rules" class="modal-image" />
-        </div>
-
-        <p>
-          Welcome to <b>Color Clash</b>! Your goal is to match at least 3 tiles
-          of the same color vertically or horizontally to score points and earn
-          coins. Here’s how you play:
-        </p>
-
-        <h3>🎮 How to Play:</h3>
-        <ul>
-          <li>Click or tap on a tile to select it.</li>
-          <li>
-            Swap two adjacent tiles to create a match of three or more tiles.
-          </li>
-          <li>Special tiles (gold or green) give bonus points and effects!</li>
-        </ul>
-
-        <h3>💡 Special Tiles:</h3>
-        <ul>
-          <li>
-            💛 Gold Tile: Awards extra <b>50 points</b> and <b>1 coin</b>.
-          </li>
-          <li>💚 Green Tile: Grants <b>EXP</b> – earn enough to level up!</li>
-        </ul>
-
-        <h3>🛒 Store:</h3>
-        <p>
-          Use your coins and points to purchase upgrades in the store. Upgrades
-          include:
-        </p>
-        <ul>
-          <li>🔹 Power-Ups – Destroy nearby tiles!</li>
-          <li>🔹 Extra Moves – Gain additional turns!</li>
-          <li>🔹 Bonus Multipliers – Increase points gained!</li>
-        </ul>
-
-        <h3>🏆 Achievements:</h3>
-        <p>
-          Complete in-game missions to unlock achievements and bonus rewards!
-        </p>
-      </div>
+    <div class="ambient" aria-hidden="true">
+      <span class="orb orb-one"></span><span class="orb orb-two"></span><span class="orb orb-three"></span>
+      <span class="spark s1">✦</span><span class="spark s2">✧</span><span class="spark s3">✦</span>
     </div>
 
-    <!-- Store Modal -->
-    <div id="storeModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeStoreModal">&times;</span>
-        <h2>Store</h2>
-
-        <!-- Store image -->
-        <div class="store-image">
-          <img src="store.png" alt="Store" />
+    <div id="app" class="app-shell">
+      <header class="topbar glass">
+        <button id="homeButton" class="brand" aria-label="Color Clash home">
+          <img src="logo.png" alt="" />
+          <span>Color Clash</span>
+        </button>
+        <div class="wallet" aria-label="Player resources">
+          <span class="wallet-pill"><span aria-hidden="true">🪙</span><strong id="globalCoins">0</strong></span>
+          <span class="wallet-pill"><span aria-hidden="true">💎</span><strong id="globalCrystals">0</strong></span>
+          <span class="player-level"><span id="playerLevelLabel">LVL 1</span><i><b id="playerXpBar"></b></i></span>
         </div>
+        <button id="settingsButton" class="icon-button" aria-label="Settings">⚙️</button>
+      </header>
 
-        <!-- Points and Coins Info -->
-        <div class="store-info">
-          <p>Points: <span id="storePoints">0</span></p>
-          <p>Coins: <span id="storeCoins">0</span></p>
-        </div>
-
-        <!-- Store Items -->
-        <div class="store-items">
-          <!-- Item 1: Bomb -->
-          <div class="store-item">
-            <img src="logo.png" alt="Bomb" />
-            <h3>💣 Bomb</h3>
-            <p>Destroy surrounding tiles instantly!</p>
-            <p class="price">Price: 30 coins</p>
-            <button class="buy-button" data-item="bomb">Buy</button>
-          </div>
-
-          <!-- Item 2: Release -->
-          <div class="store-item">
-            <img src="logo.png" alt="Release" />
-            <h3>🪄 Release</h3>
-            <p>Clear all tiles of one color!</p>
-            <p class="price">Price: 40 coins</p>
-            <button class="buy-button" data-item="release">Buy</button>
-          </div>
-
-          <!-- Item 3: Exchange Points for Coins -->
-          <div class="store-item">
-            <img src="logo.png" alt="Exchange" />
-            <h3>🔄 Exchange</h3>
-            <p>Convert 1000 points to 5 coins.</p>
-            <p class="price">Requires: 1000 points</p>
-            <button class="buy-button" data-item="exchange">Exchange</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Achievements Modal -->
-    <div id="achievementsModal" class="modal">
-      <div class="modal-contentacxh">
-        <span class="close" id="closeAchievementsModal">&times;</span>
-        <h2>Achievements</h2>
-        <div class="achievement-logo-container">
-          <img src="ach.png" alt="Achievement Logo" class="achievement-logo" />
-        </div>
-
-        <div class="achievement-list">
-          <!-- Achievement 1 -->
-          <div id="achievement-level-5" class="achievement locked">
-            <img src="logo.png" alt="Level 5 Achievement" />
-            <div>
-              <h3>Reach Level 5</h3>
-              <p>Reach level 5 to unlock this achievement.</p>
+      <main>
+        <section id="homeScreen" class="screen active home-screen" aria-labelledby="heroTitle">
+          <div class="hero-card glass">
+            <div class="hero-copy">
+              <span class="eyebrow" data-i18n="heroEyebrow">A colorful puzzle adventure</span>
+              <h1 id="heroTitle"><span data-i18n="heroTitleA">Match.</span> <span class="gradient-text" data-i18n="heroTitleB">Create.</span> <span data-i18n="heroTitleC">Conquer.</span></h1>
+              <p data-i18n="heroText">Build spectacular combinations, recover lost artifacts and unlock new worlds.</p>
+              <div class="hero-actions">
+                <button id="continueButton" class="primary-button"><span data-i18n="continueGame">Continue adventure</span><b>›</b></button>
+                <button id="openMapButton" class="secondary-button" data-i18n="levelMap">Level map</button>
+              </div>
+              <div class="daily-card">
+                <span class="daily-icon">🎁</span>
+                <div><strong data-i18n="dailyGift">Daily gift</strong><small id="dailyGiftText" data-i18n="dailyGiftReady">Your reward is ready!</small></div>
+                <button id="dailyGiftButton" data-i18n="collect">Collect</button>
+              </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="hero-ring ring-a"></div><div class="hero-ring ring-b"></div>
+              <div class="mascot-core"><span>🌈</span><b>COLOR<br />CLASH</b></div>
+              <span class="floating-gem gem-a">◆</span><span class="floating-gem gem-b">◆</span><span class="floating-gem gem-c">◆</span>
             </div>
           </div>
 
-          <!-- Achievement 2 -->
-          <div id="achievement-coins-10" class="achievement locked">
-            <img src="logo.png" alt="10 Coins Achievement" />
-            <div>
-              <h3>Collect 10 Coins</h3>
-              <p>Earn 10 coins to unlock this achievement.</p>
+          <div class="quick-grid">
+            <button class="quick-card glass" data-open="missions"><span class="quick-icon coral">🎯</span><span><strong data-i18n="missions">Missions</strong><small id="missionSummary">0/3</small></span><b>›</b></button>
+            <button class="quick-card glass" data-open="achievements"><span class="quick-icon gold">🏆</span><span><strong data-i18n="achievements">Achievements</strong><small id="achievementSummary">0/12</small></span><b>›</b></button>
+            <button class="quick-card glass" data-open="shop"><span class="quick-icon violet">🛍️</span><span><strong data-i18n="shop">Power shop</strong><small data-i18n="shopCaption">Boost your game</small></span><b>›</b></button>
+            <button class="quick-card glass" data-open="collection"><span class="quick-icon cyan">🗿</span><span><strong data-i18n="collection">Artifacts</strong><small id="artifactSummary">0/3</small></span><b>›</b></button>
+          </div>
+        </section>
+
+        <section id="mapScreen" class="screen map-screen" aria-labelledby="mapTitle">
+          <div class="section-heading">
+            <button class="back-button" data-back="home">←</button>
+            <div><span class="eyebrow" data-i18n="campaign">Campaign</span><h2 id="mapTitle" data-i18n="chooseLevel">Choose a level</h2></div>
+          </div>
+          <div id="worldTabs" class="world-tabs" role="tablist"></div>
+          <div id="mapPanel" class="map-panel glass"><div id="mapPath" class="map-path"></div></div>
+        </section>
+
+        <section id="gameScreen" class="screen game-screen" aria-label="Game board">
+          <div class="game-topline">
+            <button id="gameBackButton" class="back-button" aria-label="Back to map">←</button>
+            <div class="level-heading"><span id="worldName">Candy Coast</span><strong id="levelName">Level 1</strong></div>
+            <button id="pauseButton" class="icon-button" aria-label="Pause">Ⅱ</button>
+          </div>
+          <div class="game-layout">
+            <aside class="goal-panel glass">
+              <div class="level-badge"><span data-i18n="level">Level</span><strong id="levelNumber">1</strong></div>
+              <div class="moves-card"><span data-i18n="moves">Moves</span><strong id="movesLeft">20</strong></div>
+              <h3 data-i18n="goals">Goals</h3>
+              <div id="goalsList" class="goals-list"></div>
+              <div class="score-progress"><span><b data-i18n="score">Score</b><strong id="scoreValue">0</strong></span><i><b id="scoreBar"></b></i></div>
+              <div class="combo-display" id="comboDisplay"><span>🔥</span><b id="comboValue">x1</b><small data-i18n="combo">Combo</small></div>
+            </aside>
+            <div class="board-area">
+              <div class="board-frame">
+                <div class="board-glow" aria-hidden="true"></div>
+                <div id="gameBoard" class="game-board" role="grid" aria-label="Color Clash board"></div>
+                <div id="boardMessage" class="board-message" aria-live="polite"></div>
+              </div>
+              <div id="boosterBar" class="booster-bar glass" aria-label="Boosters"></div>
             </div>
           </div>
-
-          <!-- Achievement 3 -->
-          <div id="achievement-level-10" class="achievement locked">
-            <img src="logo.png" alt="Level 10 Achievement" />
-            <div>
-              <h3>Reach Level 10</h3>
-              <p>Reach level 10 to unlock this achievement.</p>
-            </div>
-          </div>
-
-          <!-- Achievement 4 -->
-          <div id="achievement-coins-50" class="achievement locked">
-            <img src="logo.png" alt="50 Coins Achievement" />
-            <div>
-              <h3>Collect 50 Coins</h3>
-              <p>Earn 50 coins to unlock this achievement.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
-
-    <!-- Missions Modal -->
-    <div id="missionsModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeMissionsModal">&times;</span>
-        <h2>Missions</h2>
-
-        <!-- ✅ Logo pod nazwą modala -->
-        <div class="modal-image-container">
-          <img src="mission.png" alt="Missions Logo" class="modal-image" />
-        </div>
-
-        <ul class="missions-list">
-          <li id="mission-level-3" class="mission">
-            <span class="mission-text">Reach Level 3</span>
-            <span class="mission-reward">Reward: 🪙 10 Coins</span>
-          </li>
-          <li id="mission-level-5" class="mission">
-            <span class="mission-text">Reach Level 5</span>
-            <span class="mission-reward">Reward: 🪙 10 Coins</span>
-          </li>
-          <li id="mission-play-1min" class="mission">
-            <span class="mission-text">Play for 1 Minute</span>
-            <span class="mission-reward">Reward: 🪙 50 Coins</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Game Grid (Initially Hidden) -->
-    <div id="gameContainer" class="game-container hidden">
-      <div class="grid"></div>
-
-      <!-- Score Board -->
-      <div class="score-board">
-        <div>Points 🎖️: <span id="score">0</span></div>
-        <div>Level ✨: <span id="level">1</span></div>
-        <div>Coins 🪙: <span id="coins">0</span></div>
-      </div>
-
-      <!-- EXP Bar -->
-      <div class="exp-bar">
-        <div class="exp-progress"></div>
-      </div>
-    </div>
+    <div id="modalRoot" class="modal-root" aria-live="polite"></div>
+    <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+    <div id="fxLayer" class="fx-layer" aria-hidden="true"></div>
   </body>
 </html>
