@@ -237,6 +237,8 @@ function createBoard() {
   randomIndices(blockers, (i) => { game.board[i].blocker = Math.random() < .25 && blockers > 12 ? 2 : 1; });
   const coinGoal = game.config.goals.find((goal) => goal.type === "coins")?.target || 0;
   randomIndices(coinGoal + (coinGoal ? 3 : 2), (i) => { if (!game.board[i].item) game.board[i].item = "coin"; });
+  const artifactGoal = game.config.goals.find((goal) => goal.type === "artifacts")?.target || 0;
+  game.board.map((cell,i)=>({cell,i})).filter(({cell})=>!cell.item).sort(()=>Math.random()-.5).slice(0,artifactGoal).forEach(({cell})=>{cell.item="shard";});
   if (!hasPossibleMove()) shuffleBoard(false);
 }
 function randomIndices(count, action) { const pool = Array.from({ length: 64 }, (_, i) => i).sort(() => Math.random() - .5); pool.slice(0, count).forEach(action); }
@@ -253,13 +255,14 @@ function renderBoard(extraClass = "") {
   const board = $("#gameBoard"); board.innerHTML = "";
   game.board.forEach((cell, index) => {
     const tile = document.createElement("button"), data = cell.tile;
-    tile.className = `tile ${data?.special === "rainbow" ? "rainbow" : ""} ${cell.blocker ? "blocked" : ""} ${selectedIndex === index ? "selected" : ""} ${activeTool ? "tool-target" : ""} ${extraClass}`;
+    tile.className = `tile ${data?.special === "rainbow" ? "rainbow" : ""} ${cell.blocker ? "blocked" : ""} ${cell.item ? `has-item item-${cell.item}` : ""} ${selectedIndex === index ? "selected" : ""} ${activeTool ? "tool-target" : ""} ${extraClass}`;
     tile.role = "gridcell"; tile.dataset.index = index; tile.setAttribute("aria-label", data ? `${data.color} ${data.special || "gem"}` : "empty");
     tile.style.setProperty("--tile-color", data?.special === "rainbow" ? "#fff" : COLORS[data?.color]?.hex || "transparent");
     const marks = { row: "↔", col: "↕", bomb: "✹", rainbow: "✦" };
     if (data?.special) tile.innerHTML += `<span class="special-mark">${marks[data.special]}</span>`;
     if (cell.blocker) tile.innerHTML += `<span class="blocker"></span>`;
     if (cell.item === "coin") tile.innerHTML += `<span class="cell-item">🪙</span>`;
+    if (cell.item === "shard") tile.innerHTML += `<span class="cell-item">💎</span>`;
     tile.addEventListener("click", () => handleTileClick(index));
     tile.addEventListener("pointerdown", (event) => { pointerStart = { x: event.clientX, y: event.clientY, index }; });
     tile.addEventListener("pointerup", (event) => handleSwipe(event, index));
@@ -309,11 +312,11 @@ function handleTileClick(index) {
 
 async function attemptSwap(a, b) {
   if (processing || game.ended || !adjacent(a,b)) return; processing = true;
-  swapTiles(a,b); renderBoard(); await wait(160);
+  await animateSwap(a,b); swapTiles(a,b); renderBoard(); await wait(30);
   const specialCombo = game.board[a].tile?.special && game.board[b].tile?.special;
   const rainbow = game.board[a].tile?.special === "rainbow" || game.board[b].tile?.special === "rainbow";
   let matches = findMatches();
-  if (!matches.runs.length && !specialCombo && !rainbow) { swapTiles(a,b); renderBoard(); shakeBoard(); processing = false; return; }
+  if (!matches.runs.length && !specialCombo && !rainbow) { await animateSwap(a,b); swapTiles(a,b); renderBoard(); shakeBoard(); processing = false; return; }
   game.moves--; game.chain = 1; game.maxChain = 1;
   if (specialCombo) await clearDirect(new Set([a,b]), true);
   else if (rainbow) {
@@ -323,6 +326,14 @@ async function attemptSwap(a, b) {
   finishTurn();
 }
 function swapTiles(a,b) { const temp = game.board[a].tile; game.board[a].tile = game.board[b].tile; game.board[b].tile = temp; }
+async function animateSwap(a,b) {
+  const first = document.querySelector(`.tile[data-index="${a}"]`), second = document.querySelector(`.tile[data-index="${b}"]`);
+  if (!first || !second || state.settings.reducedMotion) return;
+  const r1 = first.getBoundingClientRect(), r2 = second.getBoundingClientRect(), dx = r2.left-r1.left, dy = r2.top-r1.top;
+  const timing = { duration: 230, easing: "cubic-bezier(.2,.8,.2,1)", fill: "both" };
+  const animations = [first.animate([{transform:"translate(0,0)",zIndex:8},{transform:`translate(${dx}px,${dy}px)`,zIndex:8}],timing), second.animate([{transform:"translate(0,0)",zIndex:7},{transform:`translate(${-dx}px,${-dy}px)`,zIndex:7}],timing)];
+  await Promise.all(animations.map((animation)=>animation.finished.catch(()=>{})));
+}
 function findMatches() {
   const runs = [];
   for (let row = 0; row < WIDTH; row++) {
@@ -387,6 +398,7 @@ async function animateAndClear(clear, creations = new Map()) {
     const cell = game.board[index], color = cell.tile?.color;
     if (color) { game.progress.colors[color] = (game.progress.colors[color] || 0) + 1; state.stats.matched++; state.daily.matched++; }
     if (cell.item === "coin") { cell.item = null; game.progress.coins++; state.coins++; state.stats.coins++; state.daily.coins++; audio.play("coin"); }
+    if (cell.item === "shard") { cell.item = null; game.progress.artifacts++; state.crystals++; showBoardMessage(t("artifactFound")); audio.play("special"); }
     if (cell.blocker) { cell.blocker--; game.progress.blockers++; state.stats.ice++; }
     game.score += 55 * game.chain + (cell.tile?.special ? 100 : 0);
     cell.tile = null;
@@ -480,6 +492,18 @@ function openPause(fromBack){ if(!game)return; openModal(`<div class="modal resu
 
 function showBoardMessage(text){const box=$("#boardMessage");box.textContent=text;box.classList.remove("show");void box.offsetWidth;box.classList.add("show");}
 function toast(message,type=""){const el=document.createElement("div");el.className=`toast ${type}`;el.textContent=message;$("#toastRoot").appendChild(el);setTimeout(()=>el.remove(),3100);}
-function particleBurst(indices){const boardRect=$("#gameBoard").getBoundingClientRect();indices.slice(0,18).forEach((index,n)=>{const {row,col}=coords(index),p=document.createElement("span");p.className="particle";p.textContent=n%3===0?"✦":"◆";p.style.left=`${boardRect.left+(col+.5)*boardRect.width/8}px`;p.style.top=`${boardRect.top+(row+.5)*boardRect.height/8}px`;p.style.color=COLORS[game.board[index].tile?.color]?.hex||"white";p.style.setProperty("--dx",`${(Math.random()-.5)*130}px`);p.style.setProperty("--dy",`${-30-Math.random()*100}px`);$("#fxLayer").appendChild(p);setTimeout(()=>p.remove(),1100);});}
+function particleBurst(indices){
+  const boardRect=$("#gameBoard").getBoundingClientRect(), cellSize=boardRect.width/WIDTH, layer=$("#fxLayer"), rowCounts={}, colCounts={};
+  indices.forEach((index)=>{const {row,col}=coords(index);rowCounts[row]=(rowCounts[row]||0)+1;colCounts[col]=(colCounts[col]||0)+1;});
+  indices.slice(0,24).forEach((index,n)=>{
+    const {row,col}=coords(index), x=boardRect.left+(col+.5)*cellSize, y=boardRect.top+(row+.5)*cellSize, color=COLORS[game.board[index].tile?.color]?.hex||"white";
+    const ring=document.createElement("span");ring.className="cell-burst";ring.style.left=`${x}px`;ring.style.top=`${y}px`;ring.style.width=`${cellSize*.72}px`;ring.style.height=`${cellSize*.72}px`;ring.style.color=color;layer.appendChild(ring);
+    for(let bit=0;bit<3;bit++){const p=document.createElement("span");p.className="particle";p.textContent=(n+bit)%3===0?"✦":"◆";p.style.left=`${x}px`;p.style.top=`${y}px`;p.style.color=color;p.style.setProperty("--dx",`${(Math.random()-.5)*150}px`);p.style.setProperty("--dy",`${-25-Math.random()*115}px`);layer.appendChild(p);setTimeout(()=>p.remove(),1100);}
+    setTimeout(()=>ring.remove(),650);
+  });
+  Object.entries(rowCounts).filter(([,count])=>count>=5).forEach(([row])=>addLineSweep("row",Number(row),boardRect,layer));
+  Object.entries(colCounts).filter(([,count])=>count>=5).forEach(([col])=>addLineSweep("col",Number(col),boardRect,layer));
+}
+function addLineSweep(direction,position,rect,layer){const sweep=document.createElement("span");sweep.className="line-sweep";if(direction==="row"){sweep.style.left=`${rect.left+rect.width/2}px`;sweep.style.top=`${rect.top+(position+.5)*rect.height/WIDTH}px`;sweep.style.width=`${rect.width}px`;sweep.style.height=`${rect.height/WIDTH*.32}px`;}else{sweep.style.left=`${rect.left+(position+.5)*rect.width/WIDTH}px`;sweep.style.top=`${rect.top+rect.height/2}px`;sweep.style.width=`${rect.width/WIDTH*.32}px`;sweep.style.height=`${rect.height}px`;sweep.style.background="linear-gradient(180deg,transparent,rgba(255,255,255,.95),transparent)";}layer.appendChild(sweep);setTimeout(()=>sweep.remove(),650);}
 
 init();
